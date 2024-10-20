@@ -1,5 +1,6 @@
 import * as nodemailer from "nodemailer";
 import { SendRequest } from "@/types/sendRequest";
+import juice from "juice";
 
 export async function POST(req: Request) {
   // Parse request data
@@ -19,13 +20,15 @@ export async function POST(req: Request) {
       : undefined,
   });
 
+  const inlinedHTML = juice(reqData.mail.body);
+
   // Send mail
   const info = await transporter.sendMail({
     from: reqData.sender,
     to: reqData.receivers,
     subject: reqData.mail.subject,
     // text: ???
-    html: reqData.mail.body,
+    html: inlinedHTML,
   });
 
   // Respond with status

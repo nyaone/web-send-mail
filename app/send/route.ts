@@ -25,7 +25,7 @@ export async function POST(req: Request) {
     to: reqData.receivers,
     subject: reqData.mail.subject,
     // text: ???
-    html: reqData.mail.subject,
+    html: reqData.mail.body,
   });
 
   // Respond with status
